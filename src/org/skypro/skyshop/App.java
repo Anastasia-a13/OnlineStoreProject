@@ -1,10 +1,15 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
+
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
@@ -16,6 +21,10 @@ public class App {
         Product racket = new SimpleProduct("Ракетка", 3890);
         ProductBasket basket1 = new ProductBasket();
         ProductBasket basket2 = new ProductBasket();
+        Article chooseBicycle = new Article("Как выбрать велосипед", "Перед покупкой обратите внимание на количество скоростей и качество материалов");
+        Article ballTypes = new Article("Мячи: какие виды бывают", "В продаж можно встретить баскетбольные, теннисные, футбольные и много других видов мячей");
+        Article discountBarbell = new Article("Скидка на штанги!", "Весь декабрь штанга будет продаваться со скидкой -15%");
+        SearchEngine searchEngine = new SearchEngine(10);
 //Добавление продуктов в корзину:
         basket1.addProduct(bicycle);
         basket1.addProduct(skates);
@@ -43,5 +52,26 @@ public class App {
         System.out.println(basket2.getTotalPrice());
         System.out.println("\nПоиск товара по имени в пустой корзине:");
         System.out.println("Есть ли в корзине ракетка: " + basket2.containsProduct(racket.getName()));
+//Добавление товаров и статей в поисковый массив:
+        searchEngine.add(bicycle);
+        searchEngine.add(skates);
+        searchEngine.add(ball);
+        searchEngine.add(dumbbell);
+        searchEngine.add(barbell);
+        searchEngine.add(racket);
+        searchEngine.add(chooseBicycle);
+        searchEngine.add(ballTypes);
+        searchEngine.add(discountBarbell);
+        System.out.println("\n" + chooseBicycle.getStringRepresentation());
+        System.out.println("\nРезультаты поиска");
+        Searchable[] results1 = searchEngine.search("ВЕЛОсипед");
+        System.out.println("\nПоиск 'ВЕЛОсипед':");
+        System.out.println(Arrays.toString(results1));
+        Searchable[] results2 = searchEngine.search("Штанга");
+        System.out.println("\nПоиск 'Штанга':");
+        System.out.println(Arrays.toString(results2));
+        Searchable[] results3 = searchEngine.search("Мяч");
+        System.out.println("\nПоиск 'Мяч':");
+        System.out.println(Arrays.toString(results3));
     }
 }
