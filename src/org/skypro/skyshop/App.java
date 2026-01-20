@@ -6,6 +6,7 @@ import org.skypro.skyshop.product.DiscountProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
@@ -73,5 +74,44 @@ public class App {
         Searchable[] results3 = searchEngine.search("Мяч");
         System.out.println("\nПоиск 'Мяч':");
         System.out.println(Arrays.toString(results3));
+        //Демонстрация проверки данных:
+        System.out.println("\nПроверка данных:");
+        try {
+            SimpleProduct cap = new SimpleProduct(" ", 1569);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        try {
+            SimpleProduct sneakers = new SimpleProduct("Кроссовки", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        try {
+            DiscountProduct tennisBall = new DiscountProduct("Теннисный мяч", 989, 110);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        System.out.println("\nПоиск лучшего совпадения");
+        System.out.println("\nУспешный поиск");
+        try {
+            Searchable best1 = searchEngine.findBestMatch("РАкетка");
+            System.out.println("Лучшее совпадение для 'Ракетка': " + best1.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка поиска: " + e.getMessage());
+        }
+        System.out.println("\nПоиск без результата");
+        try {
+            Searchable best2 = searchEngine.findBestMatch("сноуборд");
+            System.out.println("Лучшее совпадение для 'сноуборд': " + best2.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка поиска: " + e.getMessage());
+        }
+
+        System.out.println("\nПустой запрос");
+        try {
+            searchEngine.findBestMatch("");
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка поиска: " + e.getMessage());
+        }
     }
 }
