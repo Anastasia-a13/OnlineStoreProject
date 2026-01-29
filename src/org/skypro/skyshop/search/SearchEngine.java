@@ -1,34 +1,20 @@
 package org.skypro.skyshop.search;
 
-public class SearchEngine {
-    private final Searchable[] items;
-    private int count = 0;
+import java.util.ArrayList;
+import java.util.List;
 
-    public SearchEngine(int capacity) {
-        this.items = new Searchable[capacity];
-    }
+public class SearchEngine {
+    private final List<Searchable> items = new ArrayList<>();
 
     public void add(Searchable item) {
-        if (count < items.length) {
-            items[count] = item;
-            count++;
-        } else {
-            System.out.println("Невозможно добавить элемент: хранилище переполнено");
-        }
+        items.add(item);
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int resultCount = 0;
-
-        for (int i = 0; i < count; i++) {
-            Searchable item = items[i];
-            if (item.getSearchTerm().toLowerCase().contains(query.toLowerCase())) {
-                results[resultCount] = item;
-                resultCount++;
-                if (resultCount == 5) {
-                    break;
-                }
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
+        for (Searchable item : items) {
+            if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+                results.add(item);
             }
         }
         return results;
@@ -40,12 +26,13 @@ public class SearchEngine {
         }
         Searchable bestMatch = null;
         int maxCount = 0;
-        for (int i = 0; i < count; i++) {
-            Searchable item = items[i];
-            int count = countOccurrences(item.getSearchTerm().toLowerCase(), search.toLowerCase());
-            if (count > maxCount) {
-                maxCount = count;
-                bestMatch = item;
+        for (Searchable item : items) {
+            if (item != null) {
+                int count = countOccurrences(item.getSearchTerm().toLowerCase(), search.toLowerCase());
+                if (count > maxCount) {
+                    maxCount = count;
+                    bestMatch = item;
+                }
             }
         }
 
