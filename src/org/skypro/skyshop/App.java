@@ -10,7 +10,7 @@ import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -25,20 +25,19 @@ public class App {
         Article chooseBicycle = new Article("Как выбрать велосипед", "Перед покупкой обратите внимание на количество скоростей и качество материалов");
         Article ballTypes = new Article("Мячи: какие виды бывают", "В продаж можно встретить баскетбольные, теннисные, футбольные и много других видов мячей");
         Article discountBarbell = new Article("Скидка на штанги!", "Весь декабрь штанга будет продаваться со скидкой -15%");
-        SearchEngine searchEngine = new SearchEngine(10);
+        SearchEngine searchEngine = new SearchEngine();
 //Добавление продуктов в корзину:
-        basket1.addProduct(bicycle);
-        basket1.addProduct(skates);
-        basket1.addProduct(ball);
+        basket1.add(bicycle);
+        basket1.add(skates);
+        basket1.add(ball);
+        basket1.add(barbell);
         System.out.println("\nПечать содержимого корзины с несколькими товарами:");
         basket1.printBasket();
-        System.out.println("\nДобавление продукта в заполненную корзину, в которой нет свободного места:");
-        basket2.addProduct(ball);
-        basket2.addProduct(barbell);
-        basket2.addProduct(racket);
-        basket2.addProduct(skates);
-        basket2.addProduct(dumbbell);
-        basket2.addProduct(bicycle);
+        basket2.add(ball);
+        basket2.add(barbell);
+        basket2.add(racket);
+        basket2.add(skates);
+        basket2.add(dumbbell);
         System.out.println("\nПолучение стоимости корзины с несколькими товарами:");
         System.out.println(basket2.getTotalPrice());
         System.out.println("\nПоиск товара, который есть в корзине:");
@@ -65,15 +64,15 @@ public class App {
         searchEngine.add(discountBarbell);
         System.out.println("\n" + chooseBicycle.getStringRepresentation());
         System.out.println("\nРезультаты поиска");
-        Searchable[] results1 = searchEngine.search("ВЕЛОсипед");
+        List<Searchable> results1 = searchEngine.search("ВЕЛОсипед");
         System.out.println("\nПоиск 'ВЕЛОсипед':");
-        System.out.println(Arrays.toString(results1));
-        Searchable[] results2 = searchEngine.search("Штанга");
+        System.out.println(results1);
+        List<Searchable> results2 = searchEngine.search("Штанга");
         System.out.println("\nПоиск 'Штанга':");
-        System.out.println(Arrays.toString(results2));
-        Searchable[] results3 = searchEngine.search("Мяч");
+        System.out.println(results2);
+        List<Searchable> results3 = searchEngine.search("Мяч");
         System.out.println("\nПоиск 'Мяч':");
-        System.out.println(Arrays.toString(results3));
+        System.out.println(results3);
         //Демонстрация проверки данных:
         System.out.println("\nПроверка данных:");
         try {
@@ -113,5 +112,30 @@ public class App {
         } catch (BestResultNotFound e) {
             System.out.println("Ошибка поиска: " + e.getMessage());
         }
+        System.out.println("\nУдаление продукта из корзины");
+        List<Product> removedProduct = basket1.removeProductByName("Коньки");
+        if (removedProduct.isEmpty()) {
+            System.out.println("Список удаленных товаров пуст");
+        } else {
+            for (Product product : removedProduct) {
+                System.out.println("Удален товар из корзины: " + product);
+            }
+        }
+        System.out.println("\nСодержимое корзины после удаления");
+        basket1.printBasket();
+        System.out.println("\nУдаление несуществующего продукта");
+        List<Product> removedProduct2 = basket1.removeProductByName("Коньки");
+        if (removedProduct2.isEmpty()) {
+            System.out.println("Список удаленных товаров пуст");
+        } else {
+            for (Product product : removedProduct2) {
+                System.out.println("Удален товар из корзины: " + product);
+            }
+        }
+        System.out.println("\nСодержимое корзины");
+        basket1.printBasket();
+        System.out.println("\nПоиск по запросу 'ВелосИпед'");
+        List<Searchable> results4 = searchEngine.search("ВелосИпед");
+        System.out.println(results4);
     }
 }
