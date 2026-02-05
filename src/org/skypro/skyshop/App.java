@@ -11,6 +11,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -64,15 +65,21 @@ public class App {
         searchEngine.add(discountBarbell);
         System.out.println("\n" + chooseBicycle.getStringRepresentation());
         System.out.println("\nРезультаты поиска");
-        List<Searchable> results1 = searchEngine.search("ВЕЛОсипед");
+        Map<String, Searchable> results1 = searchEngine.search("ВЕЛОсипед");
         System.out.println("\nПоиск 'ВЕЛОсипед':");
-        System.out.println(results1);
-        List<Searchable> results2 = searchEngine.search("Штанга");
+        for (Searchable result : results1.values()) {
+            System.out.println(result);
+        }
+        Map<String, Searchable> results2 = searchEngine.search("Штанга");
         System.out.println("\nПоиск 'Штанга':");
-        System.out.println(results2);
-        List<Searchable> results3 = searchEngine.search("Мяч");
+        for (Searchable result : results2.values()) {
+            System.out.println(result);
+        }
+        Map<String, Searchable> results3 = searchEngine.search("Мяч");
         System.out.println("\nПоиск 'Мяч':");
-        System.out.println(results3);
+        for (Searchable result : results3.values()) {
+            System.out.println(result);
+        }
         //Демонстрация проверки данных:
         System.out.println("\nПроверка данных:");
         try {
@@ -135,7 +142,9 @@ public class App {
         System.out.println("\nСодержимое корзины");
         basket1.printBasket();
         System.out.println("\nПоиск по запросу 'ВелосИпед'");
-        List<Searchable> results4 = searchEngine.search("ВелосИпед");
-        System.out.println(results4);
+        Map<String, Searchable> results4 = searchEngine.search("ВелосИпед");
+        for (Searchable result : results4.values()) {
+            System.out.println(result);
+        }
     }
 }
