@@ -11,7 +11,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
@@ -65,20 +65,20 @@ public class App {
         searchEngine.add(discountBarbell);
         System.out.println("\n" + chooseBicycle.getStringRepresentation());
         System.out.println("\nРезультаты поиска");
-        Map<String, Searchable> results1 = searchEngine.search("ВЕЛОсипед");
+        Set<Searchable> results1 = searchEngine.search("ВЕЛОсипед");
         System.out.println("\nПоиск 'ВЕЛОсипед':");
-        for (Searchable result : results1.values()) {
-            System.out.println(result);
+        for (Searchable result : results1) {
+            System.out.println(result.getStringRepresentation());
         }
-        Map<String, Searchable> results2 = searchEngine.search("Штанга");
+        Set<Searchable> results2 = searchEngine.search("Штанга");
         System.out.println("\nПоиск 'Штанга':");
-        for (Searchable result : results2.values()) {
-            System.out.println(result);
+        for (Searchable result : results2) {
+            System.out.println(result.getStringRepresentation());
         }
-        Map<String, Searchable> results3 = searchEngine.search("Мяч");
+        Set<Searchable> results3 = searchEngine.search("Мяч");
         System.out.println("\nПоиск 'Мяч':");
-        for (Searchable result : results3.values()) {
-            System.out.println(result);
+        for (Searchable result : results3) {
+            System.out.println(result.getStringRepresentation());
         }
         //Демонстрация проверки данных:
         System.out.println("\nПроверка данных:");
@@ -142,9 +142,9 @@ public class App {
         System.out.println("\nСодержимое корзины");
         basket1.printBasket();
         System.out.println("\nПоиск по запросу 'ВелосИпед'");
-        Map<String, Searchable> results4 = searchEngine.search("ВелосИпед");
-        for (Searchable result : results4.values()) {
-            System.out.println(result);
+        Set<Searchable> results4 = searchEngine.search("ВелосИпед");
+        for (Searchable result : results4) {
+            System.out.println(result.getStringRepresentation());
         }
     }
 }
